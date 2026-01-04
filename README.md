@@ -77,10 +77,10 @@
 Le fichier par défaut est `~/.xampp_deployer.env`. Exemple minimal :
 
 ```ini
-SSH_HOST=tryxee62.fr
-SSH_PORT=2128
-SSH_USER=tryxee62
-SSH_KEY=C:\Users\TON_USER\.ssh\id_ed25519
+SSH_HOST=example.com
+SSH_PORT=PORT
+SSH_USER=HOST
+SSH_KEY=C:\Users\TON_USER\.ssh\key_name
 SSH_SUDO_PASS=
 SSH_TARGET=/var/www/html
 RSYNC_FLAGS=-az
