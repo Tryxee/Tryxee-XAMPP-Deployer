@@ -67,9 +67,8 @@
 
 4. Lance l’application :
    ```bash
-   python xampp_deployer.py
+   python deployer.py
    ```
-   (remplace `xampp_deployer.py` par le nom réel du fichier)
 
 ---
 
@@ -160,31 +159,6 @@ BACKUP_DIR=~/.xampp_deployer_backups
 3. Logs / progression :
    - Console intégrée affiche les messages.
    - Barre de progression indique %.
-
----
-
-## ssh-agent & passphrase (recommandé)
-Si tu mets une **passphrase**, utilise l’agent pour éviter d’être demandé à chaque connexion.
-
-### Windows (PowerShell) :
-```powershell
-# Démarrer l'agent OpenSSH
-Start-Service ssh-agent
-
-# Ajouter la clé (on te demandera la passphrase une fois)
-ssh-add $env:USERPROFILE\.ssh\id_ed25519
-
-# Vérifier
-ssh-add -l
-```
-
-Après `ssh-add`, tu peux lancer XAMPP Deployer : la clé sera utilisée sans prompt.
-
-### Linux / Mac :
-```bash
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
-```
 
 ---
 
