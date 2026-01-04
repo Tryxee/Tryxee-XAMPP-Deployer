@@ -236,10 +236,4 @@ chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
 ```
 
-**Démarrer ssh-agent & ajouter la clé (Windows)**:
-```powershell
-Start-Service ssh-agent
-ssh-add $env:USERPROFILE\.ssh\id_ed25519
-```
-
 ---
