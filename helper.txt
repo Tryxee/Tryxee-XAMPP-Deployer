@@ -1,0 +1,144 @@
+=======================================================
+HELPER — CONFIGURATION SSH POUR TRYXEE XAMPP DEPLOYER
+=======================================================
+
+OBJECTIF
+--------
+Permettre au PC CLIENT de déployer sur le SERVEUR
+via SSH en utilisant une AUTHENTIFICATION PAR CLÉ (sans mot de passe).
+
+----------------------------------------------------
+PARTIE 1 — CÔTÉ CLIENT
+----------------------------------------------------
+
+1) Ouvrir PowerShell ou Invite de commandes
+
+2) Générer une clé SSH (recommandé : ed25519)
+
+    ssh-keygen -t ed25519 -C "xampp-deployer"
+
+- Appuyer sur Entrée pour le chemin par défaut :
+  C:\Users\TON_USER\.ssh\id_ed25519
+
+- Passphrase : Non
+
+3) Vérifier la présence des fichiers
+
+    C:\Users\TON_USER\.ssh\id_ed25519
+    C:\Users\TON_USER\.ssh\id_ed25519.pub
+
+4) Copier la clé PUBLIQUE (IMPORTANT : .pub)
+
+    type %USERPROFILE%\.ssh\id_ed25519.pub
+
+Copier TOUTE la ligne affichée (ssh-ed25519 AAAA... commentaire)
+
+----------------------------------------------------
+PARTIE 2 — CÔTÉ SERVEUR
+----------------------------------------------------
+
+1) Se connecter au serveur AVEC MOT DE PASSE (une dernière fois)
+
+    ssh -p <PORT> <USER>@<HOST>
+
+Exemple :
+    ssh -p 2128 tryxee62@tryxee62.fr
+
+2) Créer le dossier SSH si nécessaire
+
+    mkdir -p ~/.ssh
+
+3) Éditer le fichier des clés autorisées
+
+    nano ~/.ssh/authorized_keys
+
+4) Coller la clé publique DU CLIENT
+   (une seule ligne complète, pas de retour à la ligne au milieu)
+
+Exemple :
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... xampp-deployer
+
+5) Appliquer les BONNES permissions (OBLIGATOIRE)
+
+    chmod 700 ~/.ssh
+    chmod 600 ~/.ssh/authorized_keys
+
+⚠️ Si ces chmod ne sont pas corrects, SSH REFUSERA la clé.
+
+----------------------------------------------------
+PARTIE 3 — TEST DE CONNEXION (CLIENT → SERVEUR)
+----------------------------------------------------
+
+Sur le PC :
+
+    ssh -p <PORT> <USER>@<HOST>
+
+OU explicitement avec la clé :
+
+    ssh -i C:\Users\TON_USER\.ssh\id_ed25519 -p <PORT> <USER>@<HOST>
+
+✅ Si tu entres sans mot de passe → OK
+❌ Si "Permission denied (publickey)" → vérifier :
+   - clé publique correcte
+   - permissions chmod
+   - bon utilisateur / bon port
+
+----------------------------------------------------
+PARTIE 4 — CONFIGURATION DANS XAMPP DEPLOYER
+----------------------------------------------------
+
+Dans l'interface :
+
+SSH Host        : example.com
+SSH Port        : PORT
+SSH User        : USER
+SSH Key         : C:\Users\TON_USER\.ssh\id_ed25519
+SSH Target      : /var/www/html/
+
+⚠️ NE JAMAIS mettre :
+- le fichier .pub
+- un mot de passe SSH
+- un chemin relatif pour la clé
+
+----------------------------------------------------
+PARTIE 5 — SUDO (OPTIONNEL)
+----------------------------------------------------
+
+Si certaines commandes nécessitent sudo sur le serveur :
+
+1) Vérifier que sudo est disponible
+
+    sudo whoami
+
+2) Dans XAMPP Deployer :
+   - entrer le mot de passe sudo
+   - cliquer sur "Enregistrer sudo" (Si souhaiter)
+
+⚠️ Le mot de passe sudo est stocké dans un fichier .env :
+   DEV : ⚠️ NE PAS COMMIT CE FICHIER ⚠️
+
+----------------------------------------------------
+PARTIE 6 — ERREURS COURANTES
+----------------------------------------------------
+
+❌ Permission denied (publickey)
+→ clé mal copiée ou mauvais chmod
+
+❌ ssh: connect to host ... Connection refused
+→ mauvais port ou SSH down
+
+❌ rsync: command not found
+→ rsync non installé sur le serveur
+
+----------------------------------------------------
+BONNES PRATIQUES
+----------------------------------------------------
+
+✔️ Une clé SSH par machine
+✔️ Ne pas utiliser de passphrase
+✔️ Ne jamais partager la clé privée
+✔️ Sauvegarder ~/.ssh
+
+====================================================
+FIN DU HELPER
+====================================================
