@@ -13,13 +13,12 @@
 5. [Générer la clé SSH (client Windows)](#g%C3%A9n%C3%A9rer-la-cl%C3%A9-ssh-client-windows)  
 6. [Mettre la clé côté serveur (Linux)](#mettre-la-cl%C3%A9-c%C3%B4t%C3%A9-serveur-linux)  
 7. [Utilisation de l’application](#utilisation-de-lapplication)  
-8. [ssh-agent / passphrase (recommandé)](#ssh-agent--passphrase-recommand%C3%A9)  
-9. [Fichiers d’aide fournis (`helper.txt`)](#fichiers-daide-fournis-helpertxt)  
-10. [Dépannage & erreurs courantes](#d%C3%A9pannage--erreurs-courantes)  
-11. [Sécurité](#s%C3%A9curit%C3%A9)  
-12. [FAQ rapide](#faq-rapide)  
-13. [Changelog court](#changelog-court)  
-14. [Licence / Contact](#licence--contact)
+8. [Fichiers d’aide fournis (`helper.txt`)](#fichiers-daide-fournis-helpertxt)  
+9. [Dépannage & erreurs courantes](#d%C3%A9pannage--erreurs-courantes)  
+10. [Sécurité](#s%C3%A9curit%C3%A9)  
+11. [FAQ rapide](#faq-rapide)  
+12. [Changelog court](#changelog-court)  
+13. [Licence / Contact](#licence--contact)
 
 ---
 
@@ -99,7 +98,7 @@ BACKUP_DIR=~/.xampp_deployer_backups
    ssh-keygen -t ed25519 -C "xampp-deployer"
    ```
    - Appuie sur Entrée pour le chemin par défaut (`C:\Users\<USER>\.ssh\id_ed25519`).
-   - Mets une passphrase recommandée (sécurité).
+   - Pas de passhphrase
 
 2. Vérifie la présence :
    ```powershell
@@ -191,7 +190,6 @@ BACKUP_DIR=~/.xampp_deployer_backups
 
 ## Sécurité
 - **Ne commit pas** `.xampp_deployer.env` contenant `SSH_SUDO_PASS`.
-- Préfère passphrase + `ssh-agent` plutôt que clé sans passphrase.
 - Restreins l’accès au fichier `.env` (`chmod 600`) sur ta machine.
 - Si tu enregistres `SSH_SUDO_PASS`, comprends que c’est stocké en clair — **risque**.
 
